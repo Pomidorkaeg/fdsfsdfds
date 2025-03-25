@@ -9,8 +9,8 @@ const urlsToCache = [
   '/assets/index-[hash].js',
   '/assets/vendor-[hash].js',
   '/assets/ui-[hash].js',
-  '/assets/logo.png',
-  '/assets/hero-bg.jpg',
+  '/assets/logo.svg',
+  '/assets/hero-bg.svg',
   '/vite.svg',
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap'
 ];
