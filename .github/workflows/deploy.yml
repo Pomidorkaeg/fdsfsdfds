@@ -4,6 +4,10 @@ on:
   push:
     branches: [ main ]
 
+# Разрешаем GitHub Actions писать в репозиторий
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
