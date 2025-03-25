@@ -22,11 +22,42 @@ export default defineConfig({
     cssMinify: true,
     target: 'es2015',
     chunkSizeWarningLimit: 500,
-    sourcemap: false
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: [
+            'react', 
+            'react-dom', 
+            'react-router-dom'
+          ],
+          ui: [
+            '@radix-ui/react-toast', 
+            '@radix-ui/react-tooltip', 
+            'lucide-react'
+          ]
+        },
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
+      }
+    },
+    assetsInlineLimit: 4096
   },
   plugins: [
     react({
-      jsxRuntime: 'automatic'
+      jsxRuntime: 'automatic',
+      swcOptions: {
+        jsc: {
+          transform: {
+            react: {
+              runtime: 'automatic',
+              refresh: true,
+              development: false
+            }
+          }
+        }
+      }
     })
   ],
   resolve: {
@@ -34,5 +65,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: './'
+  base: './',
+  optimizeDeps: {
+    include: [
+      'react', 
+      'react-dom', 
+      'react-router-dom'
+    ]
+  }
 });
