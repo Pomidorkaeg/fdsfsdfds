@@ -15,11 +15,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'npm'
 
       - name: Install Dependencies
         run: |
-          npm ci
-          npm install -D terser tailwindcss-animate
+          npm install
+          npm install -D terser@5.27.2
+          npm install -D @typescript-eslint/eslint-plugin@6.21.0 @typescript-eslint/parser@6.21.0
 
       - name: Build
         run: npm run build
