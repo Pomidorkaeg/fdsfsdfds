@@ -1,107 +1,92 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FC Tournaments Hub</title>
-    <meta name="description" content="Футбольный клуб - турниры и соревнования" />
-    <meta name="author" content="Lovable" />
-    <meta property="og:image" content="./og-image.png" />
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-    
-    <!-- Предзагрузка критических ресурсов -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap">
-    
-    <!-- Inline CSS для мгновенной загрузки основных стилей -->
+    <title>Спортивный портал</title>
+    <!-- Инлайн-стили для начальной отрисовки -->
     <style>
-      /* Базовые стили, чтобы страница выглядела завершенной сразу при загрузке */
+      /* Критические стили для быстрой отрисовки */
       body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #ffffff;
-        color: #333333;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        background-color: #f9fafb;
+        color: #111827;
       }
       #root {
         min-height: 100vh;
-        display: flex;
-        flex-direction: column;
       }
-      .loading {
+      .preloader {
         display: flex;
-        justify-content: center;
         align-items: center;
-        height: 100vh;
+        justify-content: center;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100%;
+        background-color: #f9fafb;
+        z-index: 9999;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
+      .preloader.hidden {
+        opacity: 0;
+        pointer-events: none;
       }
       .spinner {
         width: 40px;
         height: 40px;
-        border: 4px solid rgba(0, 128, 0, 0.2);
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left-color: #10B981;
         border-radius: 50%;
-        border-top-color: #008000;
         animation: spin 1s linear infinite;
       }
       @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
       }
-      
-      /* Встроенные стили для имитации загруженной страницы */
-      .navbar {
-        background-color: #ffffff;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        padding: 1rem 0;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-      }
-      
-      .content-placeholder {
-        margin-top: 80px;
-        padding: 1rem;
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      
-      .hero-placeholder {
-        height: 400px;
-        background: linear-gradient(135deg, #1a472a, #2e7d32);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 24px;
-        margin-bottom: 2rem;
-      }
     </style>
-    <script type="module" crossorigin src="./assets/index-DJNb8mov.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CAF7iHFV.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="./assets/index-BMspNS-n.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/vendor-BxabhSNU.js">
+    <link rel="modulepreload" crossorigin href="./assets/ui-DYZMxKco.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-C6hGm7v9.css">
   </head>
-
   <body>
-    <div id="root">
-      <!-- Статический контент-заполнитель для мгновенного визуального рендеринга -->
-      <div class="navbar"></div>
-      <div class="content-placeholder">
-        <div class="hero-placeholder">
-          <div class="loading">
-            <div class="spinner"></div>
-          </div>
-        </div>
-      </div>
+    <!-- Прелоадер, который скроется при загрузке -->
+    <div class="preloader" id="preloader">
+      <div class="spinner"></div>
+      <p>Загрузка...</p>
     </div>
     
-    <!-- ВАЖНО: НЕ УДАЛЯЙТЕ ЭТОТ SCRIPT ТЕГ ИЛИ ЭТОТ КОММЕНТАРИЙ! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <div id="root"></div>
+    
+    <!-- Инлайн-скрипт для скрытия прелоадера -->
+    <script>
+      // Показать контент сразу, если страница загружена из кэша
+      if (window.performance && 
+          window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
+        document.getElementById('preloader').classList.add('hidden');
+      }
+      
+      // Скрыть прелоадер при полной загрузке страницы
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          document.getElementById('preloader').classList.add('hidden');
+        }, 100); // Небольшая задержка для плавности
+      });
+      
+      // Скрыть прелоадер, если загрузка занимает слишком много времени
+      setTimeout(function() {
+        document.getElementById('preloader').classList.add('hidden');
+      }, 2000);
+    </script>
     
   </body>
 </html>
