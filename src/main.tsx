@@ -7,8 +7,9 @@ import App from './App'
 // Предварительная загрузка критических ресурсов
 const preloadImages = () => {
   const images = [
-    '/assets/logo.png',
-    '/assets/hero-bg.jpg'
+    '/assets/logo.svg',
+    '/assets/hero-bg.svg',
+    '/vite.svg'
   ];
   
   images.forEach(src => {
@@ -28,7 +29,7 @@ const startApp = () => {
   );
   
   // Предзагрузка после отрисовки основного контента
-  setTimeout(preloadImages, 1000);
+  setTimeout(preloadImages, 100);
 };
 
 // Начинаем рендеринг немедленно
